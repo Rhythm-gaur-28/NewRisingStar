@@ -1,0 +1,648 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant:wght@400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Cormorant', serif;
+}
+
+/* Background with image - This is the window background */
+.auth-container {
+  min-height: 100vh;
+  /* Add background image here */
+  background-image: url('../../assets/court.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Main auth card - MAKE IT TRANSPARENT for glassmorphism to work */
+.auth-card {
+  background: transparent;
+  /* Changed from rgba(255, 255, 255, 0.98) to transparent */
+  border-radius: 20px;
+  width: 100%;
+  max-width: 950px;
+  min-height: 550px;
+  height: auto;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  animation: slideUp 0.7s ease-out;
+}
+
+/* Glassmorphic form container - NOW IT WILL SHOW */
+.form-container {
+  width: 50%;
+  padding: 0px 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+
+  /* Strong glassmorphism effect */
+  background: rgba(255, 255, 255, 0.25);
+  /* Increased opacity for better visibility */
+  backdrop-filter: blur(20px) saturate(100%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-right: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow:
+    0 8px 32px 0 rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.5);
+
+  transition: all 0.6s ease-in-out;
+}
+/* .sign-in-container {
+  left: 0;
+  z-index: 2;
+}
+
+.sign-up-container {
+  left: 0;
+  opacity: 0;
+  z-index: 1;
+} */
+/* Add subtle inner glow for glass edge effect */
+/* .form-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.4) 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0.2) 100%
+  );
+  pointer-events: none;
+  z-index: -1;
+} */
+
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+
+/* Extra spacing at top and bottom for signup - NO VISIBLE STRIPES */
+.form-container.sign-up-container {
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.overlay-container {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+  transition: transform 0.6s ease-in-out;
+  z-index: 100;
+}
+
+/* Sliding overlay panel - Remove background from parent */
+.overlay {
+  /* No background here anymore */
+  color: #ffffff;
+  position: relative;
+  left: -100%;
+  height: 100%;
+  width: 200%;
+  transform: translateX(0);
+  transition: transform 0.6s ease-in-out;
+  display: flex;
+}
+
+/* Add separate backgrounds to each overlay panel */
+.overlay-panel {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0 50px;
+  text-align: center;
+  top: 0;
+  height: 100%;
+  width: 50%;
+  transform: translateX(0);
+  transition: transform 0.6s ease-in-out;
+}
+
+/* Complete solution with blur + readability */
+.overlay-left {
+  transform: translateX(-20%);
+  position: relative;
+  overflow: hidden;
+}
+
+.overlay-left::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('https://i.pinimg.com/1200x/46/82/65/4682650da8dc14d2d54bcbffd6fbfa25.jpg');
+  background-size: cover;
+  background-position: center;
+  filter: blur(2px) brightness(0.8);
+  /* Blur + slightly darken */
+  transform: scale(1.1);
+  z-index: -1;
+}
+
+.overlay-right {
+  right: 0;
+  transform: translateX(0);
+  position: relative;
+  overflow: hidden;
+}
+
+.overlay-right::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('https://i.pinimg.com/736x/e7/ab/0a/e7ab0a4ce72822025e4bce3631237706.jpg');
+  background-size: cover;
+  background-position: center;
+  filter: blur(2px) brightness(0.8);
+  transform: scale(1.1);
+  z-index: -1;
+}
+
+
+
+/* When signup is active */
+.auth-card.right-panel-active .form-container.sign-in-container {
+  transform: translateX(100%);
+}
+
+.auth-card.right-panel-active .overlay-container {
+  transform: translateX(-100%);
+}
+
+.auth-card.right-panel-active .overlay {
+  transform: translateX(50%);
+}
+
+.auth-card.right-panel-active .overlay-left {
+  transform: translateX(0);
+}
+
+.auth-card.right-panel-active .overlay-right {
+  transform: translateX(20%);
+}
+
+/* Overlay content */
+.overlay-panel h1 {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 15px;
+  color: white;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.overlay-panel p {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.6;
+  margin-bottom: 25px;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.overlay-panel .ghost-btn {
+  background-color: transparent;
+  border: 2px solid #ffffff;
+  color: #ffffff;
+  padding: 10px 30px;
+  font-size: 17px;
+  font-weight: 1000;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  /* border-radius: 25px; */
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.overlay-panel .ghost-btn:hover {
+  background-color: #ffffff;
+  color: #0a4064;
+  transform: scale(1.05);
+}
+
+
+/* Logo Section */
+.auth-logo {
+  text-align: center;
+  margin-bottom: 8px;
+  margin-top: 0px;
+}
+
+/* Reduce logo section margin for signup */
+.sign-up-container .auth-logo {
+  margin-bottom: 5px;
+  margin-top: -10px;
+}
+
+.logo-image {
+  width: 110px;
+  height: 110px;
+  margin: 0 auto 2px;
+}
+
+/* Smaller logo for signup to fit better */
+.sign-up-container .logo-image {
+  width: 110px;
+  height: 110px;
+}
+
+.logo-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.1));
+}
+
+.academy-name {
+  font-size: 24px;
+  font-weight: 700;
+  color: #c9a961;
+  letter-spacing: 1.2px;
+  margin-bottom: 0px;
+  margin-top: 0px;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+/* Smaller text for signup */
+.sign-up-container .academy-name {
+  font-size: 20px;
+}
+
+.academy-subtitle {
+  font-size: 15px;
+  color: #25211e;
+  letter-spacing: 2px;
+  font-weight: 900;
+  margin-top: 2px;
+  line-height: 1;
+}
+
+/* Smaller subtitle for signup */
+.sign-up-container .academy-subtitle {
+  font-size: 10px;
+}
+
+/* Welcome Text */
+.welcome-text {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 12px;
+  margin-top: 12px;
+}
+
+/* Smaller welcome text for signup */
+.sign-up-container .welcome-text {
+  font-size: 24px;
+  margin-bottom: 8px;
+  margin-top: 8px;
+}
+
+/* Social Login */
+.social-login {
+  margin-bottom: 12px;
+}
+
+/* Reduced spacing for signup */
+.sign-up-container .social-login {
+  margin-bottom: 8px;
+}
+
+/* .social-text {
+  text-align: center;
+  color: #6b7280;
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+
+Smaller text for signup 
+.sign-up-container .social-text {
+  font-size: 11px;
+  margin-bottom: 6px;
+} */
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+/* Tighter gap for signup */
+.sign-up-container .social-icons {
+  gap: 10px;
+}
+
+.social-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 25%;
+  border: 1px solid #0a4064;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 18px;
+  background: #ffffff;
+  color: #0a4064;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+}
+
+/* Smaller icons for signup */
+.sign-up-container .social-icon {
+  width: 36px;
+  height: 36px;
+  font-size: 16px;
+}
+
+.social-icon:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+  background: white;
+  /* color: #0a4064; */
+}
+
+.social-icon.google {
+  background: #ffffff;
+}
+
+.social-icon.google:hover {
+  background: #0a4064;
+  color: #ffffff;
+}
+
+.social-icon.facebook {
+  background: #ffffff;
+}
+
+.social-icon.facebook:hover {
+  background: #0a4064;
+  color: #ffffff;
+}
+
+.social-icon.twitter {
+  background: #ffffff;
+}
+
+.social-icon.twitter:hover {
+  background: #0a4064;
+  color: #ffffff;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  margin: 15px 0;
+  color: #25211e;
+  font-size: 12px;
+}
+
+/* Tighter divider spacing for signup */
+.sign-up-container .divider {
+  margin: 10px 0;
+  font-size: 11px;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #e0e0e0;
+}
+
+.divider span {
+  padding: 0 12px;
+}
+
+/* Form Styles */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Reduced gap for signup form */
+.sign-up-container .auth-form {
+  gap: 10px;
+}
+
+.form-group {
+  position: relative;
+}
+
+.form-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #e8e8e8;
+  border-radius: 10px;
+  font-size: 14px;
+  background: #f8f9fa;
+  color: #2c3e50;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+/* Smaller inputs for signup */
+.sign-up-container .form-input {
+  padding: 10px 14px;
+  font-size: 13px;
+}
+
+.form-input:focus {
+  border-color: #3498db;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.form-input::placeholder {
+  color: #9ca3af;
+  font-size: 13px;
+}
+
+.sign-up-container .form-input::placeholder {
+  font-size: 12px;
+}
+
+.error-text {
+  color: #e74c3c;
+  font-size: 11px;
+  margin-top: 3px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  animation: shake 0.3s ease;
+}
+
+/* Smaller error text for signup */
+.sign-up-container .error-text {
+  font-size: 10px;
+  margin-top: 2px;
+}
+
+@keyframes shake {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(-4px);
+  }
+
+  75% {
+    transform: translateX(4px);
+  }
+}
+
+.form-input.error {
+  border-color: #e74c3c;
+  background: #fef5f5;
+}
+
+/* Submit Button */
+.submit-btn {
+  padding: 11px 40px;
+  width: auto;
+  /* Add this - makes it 80% of container width */
+  margin-left: auto;
+  /* Add these to center it */
+  margin-right: auto;
+  background: white;
+  border: 1px solid #0a4064;
+  color: #0a4064;
+  /* border: none; */
+  /* border-radius: 25px; */
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  /* box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4); */
+  transition: all 0.3s ease;
+  margin-top: 6px;
+}
+
+/* Smaller button for signup */
+.sign-up-container .submit-btn {
+  padding: 12px 40px;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.submit-btn:hover {
+  transform: translateY(-2px);
+  background: #0a4064;
+  color: #ffffff;
+  box-shadow: 0 8px 25px rgba(52, 152, 219, 0.5);
+}
+
+.submit-btn:active {
+  transform: translateY(0);
+}
+
+.submit-btn:disabled {
+  background: #95a5a6;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Forgot Password Link */
+.forgot-password {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.forgot-password a {
+  color: #25211e;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.sign-up-container .forgot-password a {
+  font-size: 12px;
+}
+
+.forgot-password a:hover {
+  color: #2980b9;
+  text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .auth-card {
+    flex-direction: column;
+    max-width: 400px;
+  }
+
+  .form-container {
+    width: 100%;
+    padding: 30px 35px;
+  }
+
+  .overlay-container {
+    display: none;
+  }
+
+  .welcome-text {
+    font-size: 26px;
+  }
+
+  .overlay-panel h1 {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 480px) {
+  .form-container {
+    padding: 25px 25px;
+  }
+
+  .welcome-text {
+    font-size: 24px;
+  }
+
+  .academy-name {
+    font-size: 20px;
+  }
+}
