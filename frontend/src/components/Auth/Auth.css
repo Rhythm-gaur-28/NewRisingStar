@@ -18,38 +18,36 @@
   align-items: center;
   padding: 20px;
   position: relative;
-  overflow: hidden;
 }
 
+/* Main auth card */
 .auth-card {
   background: transparent;
   border-radius: 20px;
   width: 100%;
   max-width: 950px;
-  min-height: 550px;
+  min-height: 600px;
   height: auto;
   box-shadow: 0 25px 70px rgba(0, 0, 0, 0.3);
   position: relative;
   overflow: hidden;
   display: flex;
+  transition: height 0.3s ease;
 }
 
-/* Form containers with glassmorphism ALWAYS applied */
+/* Form containers - BOTH SIDES EQUAL */
 .form-container {
-  position: absolute;
-  top: 0;
-  height: 100%;
   width: 50%;
-  padding: 40px 50px;
+  min-height: 550px;
+  padding: 20px 50px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   
   /* Glassmorphism */
   background: rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(15px) saturate(120%);
-  -webkit-backdrop-filter: blur(15px) saturate(120%);
-  border-right: 1px solid rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px) saturate(120%);
+  -webkit-backdrop-filter: blur(25px) saturate(120%);
   box-shadow: 
     0 8px 32px 0 rgba(0, 0, 0, 0.1),
     inset 0 1px 0 0 rgba(255, 255, 255, 0.5);
@@ -57,42 +55,60 @@
   transition: all 0.6s ease-in-out;
 }
 
-/* Login form - visible by default */
+/* Login container */
 .sign-in-container {
-  left: 0;
+  position: relative;
   z-index: 2;
+  border-radius: 20px 0 0 20px;
+  border-right: 1px solid rgba(255, 255, 255, 0.5);
 }
 
-/* Signup form - hidden by default with pointer-events: none */
+/* Signup container */
 .sign-up-container {
+  position: absolute;
+  top: 0;
   left: 0;
+  height: 100%;
   opacity: 0;
   z-index: 1;
-  padding-top: 50px;
-  padding-bottom: 50px;
-  pointer-events: none; /* Prevent interaction when hidden */
+  pointer-events: none;
+  border-radius: 20px 0 0 20px;
+  border-right: 1px solid rgba(255, 255, 255, 0.5);
 }
 
-/* When signup is active */
 .auth-card.right-panel-active .sign-in-container {
   transform: translateX(100%);
-  pointer-events: none; /* Prevent interaction when off-screen */
+  pointer-events: none;
+  position: absolute;
+  height: 100%;
+  border-radius: 0 20px 20px 0;
+  border-right: none;
+  border-left: 1px solid rgba(255, 255, 255, 0.5);
+  opacity: 0;
+  visibility: hidden;
 }
 
 .auth-card.right-panel-active .sign-up-container {
   transform: translateX(100%);
   opacity: 1;
   z-index: 5;
-  pointer-events: auto; /* Enable interaction */
+  pointer-events: auto;
+  position: relative;
+  height: auto;
+  border-radius: 0 20px 20px 0;
+  border-right: none;
+  border-left: 1px solid rgba(255, 255, 255, 0.5);
+  visibility: visible;
 }
 
-/* Overlay container */
+/* Overlay container - MATCHES FORM SIZE */
 .overlay-container {
   position: absolute;
   top: 0;
   left: 50%;
   width: 50%;
   height: 100%;
+  min-height: 550px;
   overflow: hidden;
   transition: transform 0.6s ease-in-out;
   border-radius: 0 20px 20px 0;
@@ -104,7 +120,6 @@
   border-radius: 20px 0 0 20px;
 }
 
-/* Sliding overlay */
 .overlay {
   position: relative;
   left: -100%;
@@ -120,7 +135,6 @@
   transform: translateX(50%);
 }
 
-/* Overlay panels */
 .overlay-panel {
   position: absolute;
   width: 50%;
@@ -136,7 +150,6 @@
   transition: transform 0.6s ease-in-out;
 }
 
-/* Left overlay panel */
 .overlay-left {
   transform: translateX(-200%);
   position: relative;
@@ -162,7 +175,6 @@
   transform: translateX(0);
 }
 
-/* Right overlay panel */
 .overlay-right {
   right: 0;
   transform: translateX(0);
@@ -189,7 +201,6 @@
   transform: translateX(200%);
 }
 
-/* Overlay content */
 .overlay-panel h1 {
   font-size: 36px;
   font-weight: 700;
@@ -225,16 +236,13 @@
   transform: scale(1.05);
 }
 
-/* Logo Section */
 .auth-logo {
   text-align: center;
   margin-bottom: 8px;
-  margin-top: 0px;
 }
 
 .sign-up-container .auth-logo {
   margin-bottom: 5px;
-  margin-top: -10px;
 }
 
 .logo-image {
@@ -255,14 +263,13 @@
   font-weight: 700;
   color: #c9a961;
   letter-spacing: 1.2px;
-  margin-bottom: 0px;
-  margin-top: 0px;
+  margin: 0;
   line-height: 1;
   text-transform: uppercase;
 }
 
 .sign-up-container .academy-name {
-  font-size: 20px;
+  font-size: 24px;
 }
 
 .academy-subtitle {
@@ -275,7 +282,7 @@
 }
 
 .sign-up-container .academy-subtitle {
-  font-size: 10px;
+  font-size: 15px;
 }
 
 .welcome-text {
@@ -283,14 +290,12 @@
   font-size: 28px;
   font-weight: 700;
   color: #2c3e50;
-  margin-bottom: 12px;
-  margin-top: 12px;
+  margin: 12px 0;
 }
 
 .sign-up-container .welcome-text {
   font-size: 24px;
-  margin-bottom: 8px;
-  margin-top: 8px;
+  margin: 8px 0;
 }
 
 .social-login {
@@ -373,11 +378,11 @@
 .auth-form {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
 .sign-up-container .auth-form {
-  gap: 10px;
+  gap: 8px;
 }
 
 .form-group {
@@ -419,7 +424,7 @@
 .error-text {
   color: #e74c3c;
   font-size: 11px;
-  margin-top: 3px;
+  margin-top: 4px;
   display: flex;
   align-items: center;
   gap: 4px;
@@ -428,7 +433,7 @@
 
 .sign-up-container .error-text {
   font-size: 10px;
-  margin-top: 2px;
+  margin-top: 3px;
 }
 
 @keyframes shake {
@@ -445,8 +450,7 @@
 .submit-btn {
   padding: 11px 40px;
   width: auto;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 10px auto 0;
   background: white;
   border: 1px solid #0a4064;
   color: #0a4064;
@@ -456,13 +460,12 @@
   text-transform: uppercase;
   letter-spacing: 1px;
   transition: all 0.3s ease;
-  margin-top: 6px;
 }
 
 .sign-up-container .submit-btn {
-  padding: 12px 40px;
+  padding: 10px 40px;
   font-size: 14px;
-  margin-top: 4px;
+  margin-top: 8px;
 }
 
 .submit-btn:hover {
@@ -513,8 +516,14 @@
   .form-container {
     width: 100%;
     padding: 30px 35px;
-    position: relative;
-    left: 0 !important;
+    border-radius: 20px !important;
+    min-height: auto;
+  }
+
+  .sign-in-container,
+  .sign-up-container {
+    position: relative !important;
+    height: auto !important;
     transform: none !important;
   }
 
@@ -538,7 +547,7 @@
 
 @media (max-width: 480px) {
   .form-container {
-    padding: 25px 25px;
+    padding: 25px;
   }
 
   .welcome-text {
